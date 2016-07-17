@@ -8,9 +8,9 @@
     <script type="text/javascript" src="{{ url_for('static', filename='geoLocation.js') }}"></script>
     <style type="text/css"></style>
   </head>
-  <body>
-    <div class="main">
-      <button type="button" onclick="getLocation()">Peace & Quiet</button>
-    </div>
-  </body>
+    <body>
+      <div class="main">
+        {% block content %}{% endblock %}
+      </div>
+    </body>
 </html>

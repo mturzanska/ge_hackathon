@@ -19,6 +19,9 @@ function getLatLon(position) {
         url: '/',
         data: JSON.stringify(data),
         dataType: 'json',
-        contentType: 'application/json; charset=utf-8'
+        contentType: 'application/json; charset=utf-8',
+        success: function(response) {
+	    window.location.replace(response.redirect)
+	}
     });
 }
