@@ -1,0 +1,47 @@
+html {
+}
+body {
+  margin: 0;
+  padding 0;
+}
+
+.main {
+  margin-right: 10vw;
+  margin-left: 10vw;
+  background-image: url("/static/DSCN3178.JPG");
+  background-size: cover;
+  padding-top: 40vh;
+  text-align: center;
+  min-height: 100vh;
+}
+
+#slogan {
+  font-family: Georgia;
+  font-size: 30px;
+  color: white;
+  text-shadow: 2px 2px black;
+}
+
+button {
+  vertical-align: middle;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  font-family: Georgia;
+  text-align: center;
+  font-size: 40px;
+  text-shadow: 2px 2px black;
+  border-radius: 100px;
+  width: 200px; 
+  height: 200px;
+  cursor: pointer;
+  border: 2px;
+  border-style: solid;
+}
+
+button:focus {
+  outline:0;
+}
+
+button:hover {
+  color: rgba(255,255,255,0.9) 
+}
