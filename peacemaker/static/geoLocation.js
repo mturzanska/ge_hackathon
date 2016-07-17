@@ -9,6 +9,16 @@ function getLocation() {
 function getLatLon(position) {
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-    console.log(latitude)
-    console.log(longitude)
+    var data = {
+        'latitude': latitude,
+        'longitude': longitude
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: '/',
+        data: JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8'
+    });
 }
