@@ -1,2 +1,9 @@
+funcsigs==1.0.2
+futures==3.0.5
+mock==2.0.0
+pbr==1.10.0
+pkg-resources==0.0.0
 pydub==0.16.4
+requests==2.10.0
+six==1.10.0
 wget==3.2
