@@ -60,3 +60,20 @@ button:focus {
 button:hover {
   color: rgba(255,255,255,0.9) 
 }
+
+#loader {
+  vertical-align: middle
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 8px solid #fff;
+  border-right-color: transparent,
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  z-index: 999;
+}
+
+@keyframes spin {
+from { transform: rotate(0deg);}
+to   { transform: rotate(360deg);}
+}

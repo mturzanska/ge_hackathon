@@ -3,6 +3,7 @@ import os
 
 from flask import render_template, request, Response, url_for
 
+from kneader import Kneader
 from peacemaker import app
 from rejector import Rejector
 
@@ -21,12 +22,25 @@ def find_location():
     latitude = request.json['latitude']
     longitude = request.json['longitude']
     rejector = Rejector((latitude, longitude), devices)
-    data = {'places': rejector.nearby,
+
+# get responses for nearby devices (rejector.nearby)
+
+    responses = [{'device_id': 1,
+                  'sound': '/audio_files/getgot.mp3'},
+                 {'device_id': 2,
+                  'sound': '/audio_files/getgot.mp3'},
+                 {'device_id': 1, 'humans_out': 12}, {'device_id': 7, 'humans_out': 7},
+                 {'device_id': 1, 'humans_in': 105},
+                 {'device_id': 2, 'humans_out': 1},
+                 {'device_id': 2, 'humans_in': 2}]
+
+    kneader = Kneader(responses)
+    data = {'quiet': kneader.quiet,
+            'empty': kneader.empty,
             'own_lat': latitude,
             'own_lon': longitude, }
     data = json.dumps(data)
     response = json.dumps({'redirect': url_for('places', data=data)})
-    print response
     return Response(response=response, content_type='application/json')
 
 
@@ -35,9 +49,11 @@ def places(data):
     data = json.loads(data)
     origin = data.get('own_lat'), data.get('own_lon')
     key = os.environ['GOOGLE_API_KEY']
-    a_place = data.get('places')[0]
-    destination = a_place.get('lat'), a_place.get('lon')
+    quiet = json.loads(data.get('quiet'))
+    empty = json.loads(data.get('empty'))
+    quiet_place = quiet.get('lat'), quiet.get('lon')
+    empty_place = empty.get('lat'), empty.get('lon')
     units = 'imperial'
     mode = 'walking'
-    return render_template('places.html', origin=origin, key=key, destination=destination,
-                           units=units, mode=mode)
+    return render_template('places.html', origin=origin, key=key, quiet_place=quiet_place,
+                           empty_place=empty_place, units=units, mode=mode)

@@ -4,13 +4,13 @@ import json
 from pydub import AudioSegment
 
 
-class There(object):
-
+class Place(object):
     # place template {'sound': 7.5, 'humans_out': 12, 'humans_in': 3}
+
     def __init__(self, place):
         self.place = place
-        self.flow = self.get_flow(self.place.get('humans_in'),
-                                  self.place.get('humans_out'))
+        self.crowd = self.get_crowd(self.place.get('humans_in'),
+                                    self.place.get('humans_out'))
         self.noise = self.get_noise(self.place.get('sound'))
         self.data = self.jsonify()
 
@@ -24,7 +24,7 @@ class There(object):
             return sum(loudest)/len(loudest)
 
     @staticmethod
-    def get_flow(humans_in, humans_out):
+    def get_crowd(humans_in, humans_out):
         if humans_in and humans_out:
             return humans_in + humans_out
         if humans_in and not humans_out:
@@ -33,5 +33,5 @@ class There(object):
             return humans_out
 
     def jsonify(self):
-        attrs = {'noise': self.noise, 'flow': self.flow}
+        attrs = {'noise': self.noise, 'flow': self.crowd}
         return json.dumps(attrs)

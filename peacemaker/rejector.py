@@ -7,7 +7,7 @@ class Rejector(object):
 
     def __init__(self, location, devices):
         # location template (lat, lon) in degrees
-        # convert degrees to radians
+
         self.own_lat = location[0] * pi/180
         self.own_lon = location[1] * pi/180
         self.nearby = self.reject_distant(devices)
@@ -21,7 +21,7 @@ class Rejector(object):
         nearby = []
         for device in devices:
             # devices template  [{'device_id': , 'lat': , 'lon': },], in degrees
-            # convert degrees to radians
+
             lat = device['lat'] * pi/180
             lon = device['lon'] * pi/180
             distance = self.get_distance(self.own_lat, self.own_lon, lat, lon)
