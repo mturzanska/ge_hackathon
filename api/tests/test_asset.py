@@ -17,7 +17,7 @@ class TestGetAllAssets(TestCase):
     @patch('requests.get')
     def test_correct_params(self, mock_get):
         mock_get.return_value = self.mock_rsp
-        get_assets(self.auth)
+        get_assets(self.auth, 'asset-url')
         _, kwargs = mock_get.call_args
         params = kwargs['params']
 
