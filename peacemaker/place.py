@@ -9,6 +9,8 @@ class Place(object):
 
     def __init__(self, place):
         self.place = place
+        self.lat = place.get('lat')
+        self.lon = place.get('lon')
         self.crowd = self.get_crowd(self.place.get('humans_in'),
                                     self.place.get('humans_out'))
         self.noise = self.get_noise(self.place.get('sound'))
@@ -33,5 +35,8 @@ class Place(object):
             return humans_out
 
     def jsonify(self):
-        attrs = {'noise': self.noise, 'flow': self.crowd}
+        attrs = {'noise': self.noise,
+                 'flow': self.crowd,
+                 'lat': self.lat,
+                 'lon': self.lon}
         return json.dumps(attrs)

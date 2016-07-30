@@ -1,0 +1,18 @@
+{% extends "basic.html" %}
+{% block content %}
+  {% if places %}
+    {% for destination_type, destination in places.iteritems() %}
+      <div class="locations">
+            <h1>{{ destination_type }}</h1>
+<!--            <iframe width="600"  height="450" frameborder="0" style="border:0"
+             src="https://www.google.com/maps/embed/v1/directions?key={{ key }}&origin={{ origin }}&destination={{ destination }}&units={{ units }}&mode={{ mode }}" allowfullscreen>
+     </iframe>-->
+      </div>
+    {% endfor %}
+  {% endif %}
+  {% if not places %}
+    <div class="locations">
+	<p>Apologies, there is no data available for your area</p>
+    </div>
+  {% endif %}
+{% endblock %}

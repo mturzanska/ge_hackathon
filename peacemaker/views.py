@@ -11,6 +11,13 @@ devices = [{'device_id': 13, 'lat': 52.536621, 'lon': 13.4412446999999992},
            {'device_id': 14, 'lat': 48.8583, 'lon': 2.2945},
            {'device_id': 15, 'lat': 48.8583, 'lon': 2.2945}, ]
 
+responses = [{'device_id': 13,
+              'sound': '/Users/malgorzataturzanska/Prirepos/GE_Hackathon/audio_files/getgot.mp3',
+             'lat': 52.5366,
+              'lon': 13.44},
+             {'device_id': 13, 'humans_out': 12, 'lat': 52.5366, 'lon': 13.44},
+             {'device_id': 13, 'humans_in': 105, 'lat': 52.5366, 'lon': 13.44}]
+
 
 @app.route('/', methods=['GET'])
 def start():
@@ -22,23 +29,12 @@ def find_location():
     latitude = request.json['latitude']
     longitude = request.json['longitude']
     rejector = Rejector((latitude, longitude), devices)
-
-# get responses for nearby devices (rejector.nearby)
-
-    responses = [{'device_id': 1,
-                  'sound': '/audio_files/getgot.mp3'},
-                 {'device_id': 2,
-                  'sound': '/audio_files/getgot.mp3'},
-                 {'device_id': 1, 'humans_out': 12}, {'device_id': 7, 'humans_out': 7},
-                 {'device_id': 1, 'humans_in': 105},
-                 {'device_id': 2, 'humans_out': 1},
-                 {'device_id': 2, 'humans_in': 2}]
-
+    # get responses for nearby devices (rejector.nearby)
     kneader = Kneader(responses)
-    data = {'quiet': kneader.quiet,
-            'empty': kneader.empty,
+    data = {'quiet': getattr(kneader, 'quiet', None),
+            'secluded': getattr(kneader, 'secluded', None),
             'own_lat': latitude,
-            'own_lon': longitude, }
+            'own_lon': longitude}
     data = json.dumps(data)
     response = json.dumps({'redirect': url_for('places', data=data)})
     return Response(response=response, content_type='application/json')
@@ -47,13 +43,28 @@ def find_location():
 @app.route('/places/<string:data>', methods=['GET'])
 def places(data):
     data = json.loads(data)
+    quiet = data.get('quiet')
+    if quiet:
+        quiet = json.loads(quiet)
+        quiet_loc = quiet.get('lat'), quiet.get('lon')
+    secluded = data.get('secluded')
+    if secluded:
+        secluded = json.loads(secluded)
+        secluded_loc = secluded.get('lat'), secluded.get('lon')
+    if quiet and secluded and quiet == secluded:
+        places = {'Quiet and secluded': quiet_loc}
+    elif not quiet and secluded:
+        places = {'Secluded': secluded_loc}
+    elif quiet and not secluded:
+        places = {'Quiet': quiet_loc}
+    elif not quiet and not secluded:
+        places = {}
+    else:
+        places = {'Quiet': quiet_loc,
+                  'Secluded': secluded_loc}
     origin = data.get('own_lat'), data.get('own_lon')
     key = os.environ['GOOGLE_API_KEY']
-    quiet = json.loads(data.get('quiet'))
-    empty = json.loads(data.get('empty'))
-    quiet_place = quiet.get('lat'), quiet.get('lon')
-    empty_place = empty.get('lat'), empty.get('lon')
     units = 'imperial'
     mode = 'walking'
-    return render_template('places.html', origin=origin, key=key, quiet_place=quiet_place,
-                           empty_place=empty_place, units=units, mode=mode)
+    return render_template('places.html', origin=origin, key=key, places=places,
+                           units=units, mode=mode)
