@@ -11,10 +11,10 @@ document.onreadystatechange = function() {
 
 function getLocation() {
     if (navigator.geolocation) {
-        geoLocation = navigator.geolocation.getCurrentPosition(getLatLon); 
+        geoLocation = navigator.geolocation.getCurrentPosition(getLatLon);
     } else {
         alert('Geolocation is not supported by your browser');
-    }	         
+    }
 }
 
 function getLatLon(position) {

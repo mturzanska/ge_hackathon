@@ -57,7 +57,8 @@ class TestGetAudio(TestCase):
     def test_download_audio(self, mock_get):
         asset = self.assets[-1]
         path = download_audio(self.auth, asset, timeout=10)
-        mock_get.assert_called_with(self.assets[-1]['url'],
+        expected_url = self.assets[-1]['url'].replace('http', 'https')
+        mock_get.assert_called_with(expected_url,
                                     auth=self.auth,
                                     stream=True,
                                     timeout=10)

@@ -46,7 +46,7 @@ button {
   font-size: 40px;
   text-shadow: 2px 2px black;
   border-radius: 100px;
-  width: 200px; 
+  width: 200px;
   height: 200px;
   cursor: pointer;
   border: 2px;
@@ -58,7 +58,7 @@ button:focus {
 }
 
 button:hover {
-  color: rgba(255,255,255,0.9) 
+  color: rgba(255,255,255,0.9);
 }
 
 #loader {

@@ -16,14 +16,14 @@ class AuthenticatorFactory(object):
 
     def set_token(self):
         headers = {
-            'Authorization': 'basic {b64cred}'.format(b64cred=self.b64cred),
+            'authorization': 'Basic {b64cred}'.format(b64cred=self.b64cred),
             'Content-Type': 'application/x-www-form-urlencoded'
         }
-        params = {
+        data = {
             'client_id': self.client_id,
             'grant_type': 'client_credentials'
         }
-        rsp = requests.get(self.auth_endpoint, headers=headers, params=params)
+        rsp = requests.post(self.auth_endpoint, headers=headers, data=data)
         if rsp.status_code == 200:
             self.token = json.loads(rsp.text)['access_token']
         # raise error if bad request
