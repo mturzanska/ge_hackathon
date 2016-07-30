@@ -9,15 +9,18 @@ from rejector import Rejector
 from kneader import Kneader
 
 devices = [{'device_id': 13, 'lat': 52.536621, 'lon': 13.4412446999999992},
+           {'device_id': 12, 'lat': 52.536621, 'lon': 13.4412446999999992},
            {'device_id': 14, 'lat': 48.8583, 'lon': 2.2945},
-           {'device_id': 15, 'lat': 48.8583, 'lon': 2.2945}, ]
+           {'device_id': 15, 'lat': 48.8583, 'lon': 2.2945}]
 
 responses = [{'device_id': 13,
               'sound': '/Users/malgorzataturzanska/Prirepos/GE_Hackathon/audio_files/getgot.mp3',
-             'lat': 52.5366,
+              'lat': 52.5366,
               'lon': 13.44},
              {'device_id': 13, 'humans_out': 12, 'lat': 52.5366, 'lon': 13.44},
-             {'device_id': 13, 'humans_in': 105, 'lat': 52.5366, 'lon': 13.44}]
+             {'device_id': 13, 'humans_in': 105, 'lat': 52.5366, 'lon': 13.44},
+             {'device_id': 12, 'humans_out': 1, 'lat': 52.5366, 'lon': 13.44},
+             {'device_id': 12, 'humans_in': 2, 'lat': 52.5366, 'lon': 13.44}]
 
 
 @app.route('/', methods=['GET'])
@@ -25,7 +28,7 @@ def start():
     # example asset API usage
     assets_json = get_assets(app.config['PREDIX_AUTH'])
     audios = get_audio_for_assets(app.config['PREDIX_AUTH'], assets_json)
-    return render_template('basic.html')
+    return render_template('start.html')
 
 
 @app.route('/', methods=['POST'])

@@ -15,6 +15,7 @@ class Kneader(object):
 
     def get_place_without(self, feature):
         places = self.places.values()
+        places = [pl for pl in places if getattr(pl, feature) is not None]
         get_feature = lambda x: getattr(x, feature)
         try:
             return sorted(places, key=get_feature)[0].data
@@ -35,6 +36,6 @@ class Kneader(object):
         places = {}
         for device, place in self.full_set.iteritems():
             place = Place(place)
-            if place.noise and place.crowd:
+            if place.noise or place.crowd:
                 places[device] = place
         return places
