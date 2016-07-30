@@ -1,0 +1,6 @@
+settings = {
+    'client_id': '',
+    'zone_id': '',
+    'b64cred': '',
+    'auth_endpoint': ''
+}
