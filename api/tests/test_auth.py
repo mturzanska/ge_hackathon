@@ -14,33 +14,33 @@ class TestAuthenticatorFactorySetToken(TestCase):
         type(self.mock_rsp).status_code = 200
         type(self.mock_rsp).text = '{"access_token": "token!"}'
 
-    @patch('requests.get')
-    def test_sets_correct_headers(self, mock_get):
-        mock_get.return_value = self.mock_rsp
+    @patch('requests.post')
+    def test_sets_correct_headers(self, mock_post):
+        mock_post.return_value = self.mock_rsp
         self.factory.set_token()
-        _, kwargs = mock_get.call_args
+        _, kwargs = mock_post.call_args
         headers = kwargs['headers']
 
-        self.assertIn('Authorization', headers)
+        self.assertIn('authorization', headers)
         self.assertIn('Content-Type', headers)
-        self.assertEqual('basic b64', headers['Authorization'])
+        self.assertEqual('Basic b64', headers['authorization'])
         self.assertEqual('application/x-www-form-urlencoded',
                          headers['Content-Type'])
 
-    @patch('requests.get')
-    def test_sets_correct_params(self, mock_get):
-        mock_get.return_value = self.mock_rsp
+    @patch('requests.post')
+    def test_sets_correct_data(self, mock_post):
+        mock_post.return_value = self.mock_rsp
         self.factory.set_token()
-        _, kwargs = mock_get.call_args
-        params = kwargs['params']
+        _, kwargs = mock_post.call_args
+        data = kwargs['data']
 
-        self.assertIn('client_id', params)
-        self.assertIn('grant_type', params)
-        self.assertEqual('client', params['client_id'])
+        self.assertIn('client_id', data)
+        self.assertIn('grant_type', data)
+        self.assertEqual('client', data['client_id'])
 
-    @patch('requests.get')
-    def test_sets_token_on_factory(self, mock_get):
-        mock_get.return_value = self.mock_rsp
+    @patch('requests.post')
+    def test_sets_token_on_factory(self, mock_post):
+        mock_post.return_value = self.mock_rsp
         self.factory.set_token()
 
         self.assertEqual(self.factory.token, 'token!')

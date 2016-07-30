@@ -3,9 +3,10 @@ import os
 
 from flask import render_template, request, Response, url_for
 
-from kneader import Kneader
+from api.asset import get_audio_for_assets, get_assets
 from peacemaker import app
 from rejector import Rejector
+from kneader import Kneader
 
 devices = [{'device_id': 13, 'lat': 52.536621, 'lon': 13.4412446999999992},
            {'device_id': 14, 'lat': 48.8583, 'lon': 2.2945},
@@ -14,7 +15,10 @@ devices = [{'device_id': 13, 'lat': 52.536621, 'lon': 13.4412446999999992},
 
 @app.route('/', methods=['GET'])
 def start():
-    return render_template('start.html')
+    # example asset API usage
+    assets_json = get_assets(app.config['PREDIX_AUTH'])
+    audios = get_audio_for_assets(app.config['PREDIX_AUTH'], assets_json)
+    return render_template('basic.html')
 
 
 @app.route('/', methods=['POST'])
