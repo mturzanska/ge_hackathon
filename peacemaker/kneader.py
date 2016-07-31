@@ -4,9 +4,6 @@ from place import Place
 class Kneader(object):
 
     def __init__(self, responses):
-        # responses template [{'device_id': 3 , 'lat': 6.777, 'lon': 3.44,
-        #                      'sound': 7.6 , 'humans': 15}]
-
         self.responses = responses
         self.full_set = self._knead()
         self.places = self._placify()
@@ -25,11 +22,11 @@ class Kneader(object):
     def _knead(self):
         full_set = {}
         for response in self.responses:
-            dev_id = response.get('device_id')
-            if dev_id not in full_set:
-                full_set[dev_id] = response
-            else:
-                full_set[dev_id].update(response)
+            for device, data in response.iteritems():
+                if device not in full_set:
+                    full_set[device] = data
+                else:
+                    full_set[device].update(data)
         return full_set
 
     def _placify(self):
