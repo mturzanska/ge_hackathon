@@ -2,6 +2,7 @@ import json
 import os
 
 from flask import render_template, request, Response, url_for
+import concurrent.futures
 
 from api.asset import (
     get_audio_for_assets, get_audio_assets, get_pedestrian_event_assets,
@@ -17,17 +18,34 @@ def start():
     return render_template('start.html')
 
 
+def get_audio_wrapper():
+    assets_json = get_audio_assets(app.config['SAFETY_AUTH'])
+    audio_file_paths = get_audio_for_assets(app.config['SAFETY_AUTH'],
+                                            assets_json)
+    return audio_file_paths
+
+
+def get_pedestrians_wrapper():
+    assets_json = get_pedestrian_event_assets(app.config['PEDESTRIAN_AUTH'])
+    pedestrian_avgs = get_pedestrians_for_assets(app.config['PEDESTRIAN_AUTH'],
+                                                 assets_json)
+    return pedestrian_avgs
+
+
 @app.route('/', methods=['POST'])
 def find_location():
     latitude = request.json['latitude']
     longitude = request.json['longitude']
-    assets_json = get_audio_assets(app.config['SAFETY_AUTH'])
-    audio_file_paths = get_audio_for_assets(app.config['SAFETY_AUTH'],
-                                            assets_json)
-    assets_json = get_pedestrian_event_assets(app.config['PEDESTRIAN_AUTH'])
-    pedestrian_avgs = get_pedestrians_for_assets(app.config['PEDESTRIAN_AUTH'],
-                                                 assets_json)
-    responses = audio_file_paths + pedestrian_avgs
+    latitude = 32.713765
+    longitude = -117.156406
+
+    responses = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+        futures = [executor.submit(get_audio_wrapper),
+                   executor.submit(get_pedestrians_wrapper)]
+        for future in concurrent.futures.as_completed(futures):
+            responses += future.result()
+
     rejector = Rejector((latitude, longitude), responses)
     kneader = Kneader(rejector.nearby)
     data = {'quiet': getattr(kneader, 'quiet', None),

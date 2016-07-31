@@ -1,6 +1,7 @@
 {% extends "basic.html" %}
 {% block content %}
 <div id=places>
+  <div class="overlay"></div>
   {% if places %}
     {% for destination_type, destination in places.iteritems() %}
             <p>&nbsp;{{ destination_type }}<p>
