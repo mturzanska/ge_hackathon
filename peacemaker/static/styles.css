@@ -5,6 +5,16 @@ body {
   padding 0;
 }
 
+p {
+  text-align: left;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  font-family: Georgia;
+  font-size: 30px;
+  text-shadow: 2px 2px black;
+  text-decoration: None;
+}
+
 .main {
   margin-right: 10vw;
   margin-left: 10vw;
@@ -19,15 +29,59 @@ body {
   min-height: 100vh;
 }
 
-.locations {
-  background: white;
+.middle {
   position: relative;
-  top: 15vh;
-  padding-top: 15vh;
-  min-height: 100vh;
-  margin-left: 15vh;
-  margin-right: 15vh;
-  opacity: 0.7;
+  vertical-align: middle;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  height: 200px;
+}
+
+#places {
+  position: inherit;
+  float: left;
+  display: inline-block;
+  height: inherit;
+  background-image: None;
+  background-color: black;
+}
+
+#loader {
+  vertical-align: middle
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  color: white;
+  background: black;
+  border: 2px solid #fff;
+  border-right-color: transparent;
+  border-right: 6px;
+  border-radius: 200px;
+  animation: spin 5s linear infinite;
+  z-index: 1;
+}
+
+#loader_text {
+  visibility: hidden;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  vertical-align: middle;
+  background: transparent;
+  color: white;
+  font-family: Georgia;
+  border: 2px solid transparent;
+  border-radius: 200px;
+  text-align: center;
+  font-size: 30px;
+  text-shadow: 2px 2px black;
+  width: 200px;
+  height: 200px;
+  z-index: 2;
 }
 
 #slogan {
@@ -39,11 +93,11 @@ body {
 
 button {
   vertical-align: middle;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,1);
   color: white;
   font-family: Georgia;
   text-align: center;
-  font-size: 40px;
+  font-size: 30px;
   text-shadow: 2px 2px black;
   border-radius: 100px;
   width: 200px;
@@ -51,29 +105,14 @@ button {
   cursor: pointer;
   border: 2px;
   border-style: solid;
+  z-index: 1;
 }
 
 button:focus {
   outline:0;
 }
 
-button:hover {
-  color: rgba(255,255,255,0.9);
-}
-
-#loader {
-  vertical-align: middle
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  border: 8px solid #fff;
-  border-right-color: transparent,
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  z-index: 999;
-}
-
 @keyframes spin {
-from { transform: rotate(0deg);}
-to   { transform: rotate(360deg);}
+  from { transform: rotate(0deg);}
+  to   { transform: rotate(360deg);}
 }

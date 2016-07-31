@@ -1,15 +1,18 @@
-document.onreadystatechange = function() {
-	var state = document.readyState
-	if (state == 'interactive') {
-	} else if (state == "complete") {
-	    setTimeout(function() {
-                document.getElementById('interactive');
-		document.getElementById('loader').style.visibility="hidden";
-	    }, 1);
-	}
-}
+// document.onreadystatechange = function() {
+// 	var state = document.readyState
+// 	if (state == 'interactive') {
+// 	} else if (state == "complete") {
+// 	    setTimeout(function() {
+//                 document.getElementById('interactive');
+// 		document.getElementById('loader').style.visibility="hidden";
+// 	    }, 1);
+// 	}
+// }
 
 function getLocation() {
+    $("button").replaceWith("<div id='loader'></div>")
+    document.getElementById("loader_text").style.visibility = "visible";
+
     if (navigator.geolocation) {
         geoLocation = navigator.geolocation.getCurrentPosition(getLatLon);
     } else {
