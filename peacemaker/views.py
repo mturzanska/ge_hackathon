@@ -3,7 +3,10 @@ import os
 
 from flask import render_template, request, Response, url_for
 
-from api.asset import get_audio_for_assets, get_assets
+from api.asset import (
+    get_audio_for_assets, get_audio_assets, get_pedestrian_event_assets,
+    get_pedestrians_for_assets)
+
 from peacemaker import app
 from rejector import Rejector
 from kneader import Kneader
@@ -25,9 +28,16 @@ responses = [{'device_id': 13,
 
 @app.route('/', methods=['GET'])
 def start():
-    # example asset API usage
-    assets_json = get_assets(app.config['PREDIX_AUTH'])
-    audios = get_audio_for_assets(app.config['PREDIX_AUTH'], assets_json)
+    # api examples
+    # assets_json = get_audio_assets(app.config['SAFETY_AUTH'])
+    # audio_file_paths = get_audio_for_assets(app.config['SAFETY_AUTH'],
+                                            # assets_json)
+    # print audio_file_paths
+
+    # assets_json = get_pedestrian_event_assets(app.config['PEDESTRIAN_AUTH'])
+    # pedestrian_avgs = get_pedestrians_for_assets(app.config['PEDESTRIAN_AUTH'],
+                                                 # assets_json)
+    # print pedestrian_avgs
     return render_template('start.html')
 
 
