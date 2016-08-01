@@ -1,6 +1,7 @@
 import json
 from time import time
 from os.path import join as join_path
+from os import getcwd
 
 import requests
 import concurrent.futures
@@ -144,7 +145,7 @@ def get_avg_ppl(ppl_events):
 
 
 def download_audio(auth, asset_dict, timeout=10):
-    save_path = '/tmp'
+    save_path = getcwd()
 
     url = asset_dict['url'].replace('http', 'https')
     print 'Device id: {0}, url: {1}'.format(asset_dict['device-id'], url)

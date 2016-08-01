@@ -1,0 +1,13 @@
+---
+applications:
+- name: peacemaker
+  memory: 512M
+  buildpack: https://github.com/ddollar/heroku-buildpack-multi
+  command: gunicorn -w 4 peacemaker:app -b 0.0.0.0:$PORT
+services:
+  - authenticator
+  - for-the-people
+  - thunder-flash
+
+env:
+  clientId: peacemaker
