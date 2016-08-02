@@ -1,6 +1,7 @@
 import json
 from time import time
 from os.path import join as join_path
+from os import getcwd
 
 import requests
 import concurrent.futures
@@ -69,7 +70,11 @@ def get_pedestrian_event_assets(auth, bbox=DEFAULT_BBOX):
 
 
 def extract_data_from_assets(auth, assets_json, extractor_fn):
-    assets = json.loads(assets_json)['_embedded']['assets']
+    try:
+        assets = json.loads(assets_json)['_embedded']['assets']
+    except KeyError, e:
+        print "Key error: {}. Json: {}".format(e, assets_json)
+
     enriched_assets = []
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
@@ -144,7 +149,7 @@ def get_avg_ppl(ppl_events):
 
 
 def download_audio(auth, asset_dict, timeout=10):
-    save_path = '/tmp'
+    save_path = getcwd()
 
     url = asset_dict['url'].replace('http', 'https')
     print 'Device id: {0}, url: {1}'.format(asset_dict['device-id'], url)

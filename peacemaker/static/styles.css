@@ -1,5 +1,7 @@
-html {
+* {
+  box-sizing: border-box;
 }
+
 body {
   margin: 0;
   padding 0;
@@ -18,7 +20,7 @@ p {
 .main {
   margin-right: 10vw;
   margin-left: 10vw;
-  background-image: url("/static/DSCN3178.JPG");
+  background-image: url("/static/background-min.jpg");
   background-size: cover;
   text-align: center;
   min-height: 100vh;
@@ -40,15 +42,37 @@ p {
 }
 
 #places {
-  position: inherit;
-  float: left;
+  position: relative;
+  margin: 0 auto;
   display: inline-block;
   height: inherit;
   background-image: None;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.6);
+  margin: 0 auto;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 20px 20px;
 }
 
-#loader {
+#places p iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 450px;
+}
+
+#places p {
+  padding: 20px;
+  background-color: transparent;
+}
+
+#places p:last-child {
+  margin: 0;
+  padding: 0;
+}
+
+.middle .loader {
   vertical-align: middle
   position: absolute;
   top: 0;
@@ -65,10 +89,17 @@ p {
   z-index: 1;
 }
 
+.middle .loader:active, .middle .loader:focus {
+  outline: none;
+}
+
 #loader_text {
+  padding-left: 44px;
+  padding-right: 44px;
   visibility: hidden;
+  opacity: 0;
   position: absolute;
-  top: 20px;
+  top: 0;
   left: 0;
   vertical-align: middle;
   background: transparent;
@@ -82,6 +113,15 @@ p {
   width: 200px;
   height: 200px;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.2s ease-in-out;
+}
+
+#loader_text p {
+  text-align: center;
 }
 
 #slogan {
@@ -91,7 +131,7 @@ p {
   text-shadow: 2px 2px black;
 }
 
-button {
+.locationBtn {
   vertical-align: middle;
   background: rgba(0,0,0,1);
   color: white;
@@ -106,10 +146,11 @@ button {
   border: 2px;
   border-style: solid;
   z-index: 1;
+  outline: none;
 }
 
-button:focus {
-  outline:0;
+.locationBtn:focus, .locationBtn:active, .locationBtn::-moz-focus-inner {
+  outline: none;
 }
 
 @keyframes spin {

@@ -26,6 +26,7 @@ class AuthenticatorFactory(object):
         rsp = requests.post(self.auth_endpoint, headers=headers, data=data)
         if rsp.status_code == 200:
             self.token = json.loads(rsp.text)['access_token']
+            print 'Token set'
         # raise error if bad request
 
     def create_authenticator(self):
